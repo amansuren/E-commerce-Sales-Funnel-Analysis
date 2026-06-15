@@ -7,7 +7,7 @@ Using **30 days of event-level data** on BigQuery, I investigated one core quest
  
 > **"Why are only 17% of visitors buying — and what can we do about it?"**
 
----
+
 ## 📸 Query Results - Funnel & Conversion Rates
 
 ### Results at a Glance
@@ -193,10 +193,10 @@ FROM user_journey;
  
 ## 🛠️ Tools Used
  
-- **Google BigQuery** — Cloud SQL execution on event-level data
-- **Standard SQL** — CTEs, conditional aggregations, date functions, timestamp arithmetic
-- **Power BI** — Dashboard visualisation of funnel KPIs
-- **GitHub** — Version control and project showcase
+- **Google BigQuery** - Cloud SQL execution on event-level data
+- **Standard SQL** - CTEs, conditional aggregations, date functions, timestamp arithmetic
+- **Power BI** - Dashboard visualisation of funnel KPIs
+- **GitHub** - Version control and project showcase
 
 ## 📋 Data Dictionary
 See [`data_dictionary.md`](./data_dictionary.md) for full column definitions and funnel stage reference.
