@@ -64,7 +64,10 @@ Not all traffic is equal. Email is the smallest channel but converts at nearly 5
 Of the 1,338 people who added items to their cart:
 - ✅ **709 bought** (53%)
 - ❌ **629 walked away** (47%)
-> **If cart abandonment dropped from 47% to the industry benchmark of 30%, that's ~$292,000 in additional annual revenue — at today's traffic levels, with zero extra ad spend.**
+
+> If cart abandonment dropped from 47% to 30%, that's roughly $293,000 in additional annual revenue - at today's traffic levels, with zero extra ad spend.
+How: 1,338 cart users/month × 12 = ~16,000/year. Reducing abandonment by 17% recovers ~2,700 purchases. 2,700 × $107 AOV = ~$293,000.
+> Assumes constant traffic volume, same AOV, and is an upper-bound estimate.
  
 ![Cart Abandonment](screenshots/12_cart_abandonment.png)
  
