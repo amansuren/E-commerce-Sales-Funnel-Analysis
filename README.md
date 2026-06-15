@@ -10,6 +10,8 @@ Using **30 days of event-level data** on BigQuery, I investigated one core quest
 
 ## 📸 Query Results - Funnel & Conversion Rates
 
+**Note:** _This is a simulated dataset. Real-world e-commerce conversion rates typically fall between 1–3%. The elevated figures here are characteristic of the synthetic data and were used to focus on funnel methodology rather than benchmark comparison._
+
 ### Results at a Glance
  
 | What We Measured | Result |
