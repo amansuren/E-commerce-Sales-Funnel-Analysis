@@ -10,7 +10,8 @@ Using **30 days of event-level data** on BigQuery, I investigated one core quest
 
 ## 📸 Query Results - Funnel & Conversion Rates
 
-**Note:** _This is a simulated dataset. Real-world e-commerce conversion rates typically fall between 1–3%. The elevated figures here are characteristic of the synthetic data and were used to focus on funnel methodology rather than benchmark comparison._
+### **Note:**
+_This is a simulated dataset. Real-world e-commerce conversion rates typically fall between 1–3%. The elevated figures here are characteristic of the synthetic data and were used to focus on funnel methodology rather than benchmark comparison._
 
 ### Results at a Glance
  
@@ -37,7 +38,7 @@ Using **30 days of event-level data** on BigQuery, I investigated one core quest
 | Checkout -> Payment | 184 | 19% |
 | Payment -> Purchase | 61 | 8% |
  
-**Finding:** The first step loses **10× more customers** than any other stage combined. This is where the business should focus first.
+**[Finding:]()** The first step loses **10× more customers** than any other stage combined. This is where the business should focus first.
 69% of visitors never even add to cart. But once they do, 92% go on to buy. The product isn't the problem - the path to the cart is.
 
 
@@ -53,7 +54,7 @@ Not all traffic is equal. Email is the smallest channel but converts at nearly 5
 | Organic Search | 1,757 | 300 | 17% | $32,709 | $109.03 | $18.62 |
 | Social Media | 1,261 | 84 | 7% | $9,700 | $115.48 | $7.69 |
  
-**Finding:** Social media users browse the most expensive items (highest AOV at $115.48) but rarely buy — a classic window-shopper pattern and a prime retargeting opportunity. Email drives the least traffic but the highest revenue per visitor by a wide margin.
+**[Finding:]()** Social media users browse the most expensive items (highest AOV at $115.48) but rarely buy — a classic window-shopper pattern and a prime retargeting opportunity. Email drives the least traffic but the highest revenue per visitor by a wide margin.
  
 <!-- ![Traffic Source](screenshots/05_traffic_source.png) -->
   
@@ -108,22 +109,20 @@ WITH funnel_stages AS (
 )
 SELECT
   stage_1_views,
- 
   stage_2_cart,
-  ROUND(stage_2_cart * 100.0 / stage_1_views, 1)       AS view_to_cart_pct,
- 
+  ROUND(stage_2_cart * 100 / stage_1_views)     AS view_to_cart_rate,
   stage_3_checkout,
-  ROUND(stage_3_checkout * 100.0 / stage_2_cart, 1)    AS cart_to_checkout_pct,
- 
+  ROUND(stage_3_checkout * 100 / stage_2_cart)      AS cart_to_checkout_rate,
   stage_4_payment,
-  ROUND(stage_4_payment * 100.0 / stage_3_checkout, 1) AS checkout_to_payment_pct,
- 
+  ROUND(stage_4_payment * 100 / stage_3_checkout)  AS checkout_to_payment_rate,
   stage_5_purchase,
-  ROUND(stage_5_purchase * 100.0 / stage_4_payment, 1) AS payment_to_purchase_pct,
- 
-  ROUND(stage_5_purchase * 100.0 / stage_1_views, 1)   AS overall_conversion_pct
-FROM funnel_stages;
+  ROUND(stage_5_purchase * 100 / stage_4_payment)   AS payment_to_purchase_rate,
+  ROUND(stage_5_purchase * 100 / stage_1_views)     AS overall_conversion_rate
+FROM funnel_stages
+
 ```
+#### Output
+![imagge](https://github.com/amansuren/sales-funnel-analysis-using-SQL/blob/87d370d742d3faf134538b961edc87302add99b1/screenshots/3.png)
 
 ### 2. Funnel Breakdown by Traffic Source
  
@@ -133,26 +132,25 @@ Groups the same funnel logic by `traffic_source` to compare channel quality — 
 WITH source_funnel AS (
   SELECT
     traffic_source,
-    COUNT(DISTINCT CASE WHEN event_type = 'page_view'   THEN user_id END) AS views,
-    COUNT(DISTINCT CASE WHEN event_type = 'add_to_cart' THEN user_id END) AS carts,
-    COUNT(DISTINCT CASE WHEN event_type = 'purchase'    THEN user_id END) AS purchases
+    COUNT(DISTINCT CASE WHEN event_type = 'page_view'  THEN user_id END) AS views,
+    COUNT(DISTINCT CASE WHEN event_type = 'add_to_cart'THEN user_id END) AS carts,
+    COUNT(DISTINCT CASE WHEN event_type = 'purchase'   THEN user_id END) AS purchases
   FROM `sql-project-487019.funnel_data_01.user_events`
   WHERE event_date >= TIMESTAMP(DATE_SUB('2026-02-03', INTERVAL 30 DAY))
   GROUP BY traffic_source
 )
 SELECT
-  traffic_source,
-  views,
-  carts,
-  purchases,
-  ROUND(carts     * 100.0 / views, 1) AS cart_conversion_pct,
-  ROUND(purchases * 100.0 / views, 1) AS overall_conversion_pct,
-  ROUND(purchases * 100.0 / carts, 1) AS cart_to_purchase_pct
+  traffic_source, views, carts, purchases,
+  ROUND(carts     * 100 / views) AS cart_conversion_rate,
+  ROUND(purchases * 100 / views) AS purchase_conversion_rate,
+  ROUND(purchases * 100 / carts) AS cart_to_purchase_rate
 FROM source_funnel
-ORDER BY purchases DESC;
+ORDER BY purchases DESC
 ```
+#### Output
+
+![imagge](https://github.com/amansuren/sales-funnel-analysis-using-SQL/blob/87d370d742d3faf134538b961edc87302add99b1/screenshots/5.png)
  
----
  
 ### 3. Time-to-Convert Analysis
  
@@ -162,24 +160,41 @@ Filters to only users who purchased (`HAVING` clause), then measures time elapse
 WITH user_journey AS (
   SELECT
     user_id,
-    MIN(CASE WHEN event_type = 'page_view'   THEN event_date END) AS view_time,
-    MIN(CASE WHEN event_type = 'add_to_cart' THEN event_date END) AS cart_time,
-    MIN(CASE WHEN event_type = 'purchase'    THEN event_date END) AS purchase_time
+    MIN(CASE WHEN event_type = 'page_view'  THEN event_date END) AS view_time,
+    MIN(CASE WHEN event_type = 'add_to_cart'THEN event_date END) AS cart_time,
+    MIN(CASE WHEN event_type = 'purchase'   THEN event_date END) AS purchase_time
   FROM `sql-project-487019.funnel_data_01.user_events`
   WHERE event_date >= TIMESTAMP(DATE_SUB('2026-02-03', INTERVAL 30 DAY))
   GROUP BY user_id
   HAVING MIN(CASE WHEN event_type = 'purchase' THEN event_date END) IS NOT NULL
 )
 SELECT
-  COUNT(*)                                                           AS converted_users,
-  ROUND(AVG(TIMESTAMP_DIFF(cart_time,     view_time,  MINUTE)), 2) AS avg_view_to_cart_mins,
-  ROUND(AVG(TIMESTAMP_DIFF(purchase_time, cart_time,  MINUTE)), 2) AS avg_cart_to_purchase_mins,
-  ROUND(AVG(TIMESTAMP_DIFF(purchase_time, view_time,  MINUTE)), 2) AS avg_total_journey_mins
+  COUNT(*) AS converted_users,
+  ROUND(AVG(TIMESTAMP_DIFF(cart_time,     view_time,    MINUTE)), 2) AS avg_view_to_cart_min,
+  ROUND(AVG(TIMESTAMP_DIFF(purchase_time, cart_time,    MINUTE)), 2) AS avg_cart_to_purchase_min,
+  ROUND(AVG(TIMESTAMP_DIFF(purchase_time, view_time,    MINUTE)), 2) AS avg_total_journey_min
 FROM user_journey;
 ```
- 
+#### Output
+
+![imagge](https://github.com/amansuren/sales-funnel-analysis-using-SQL/blob/87d370d742d3faf134538b961edc87302add99b1/screenshots/7.png)
 ---
+## 🔑 Key Takeaways
  
+**1. The funnel has one big leak and one big strength.**
+The view-to-cart rate (31%) is the only broken stage. Once customers reach checkout, they almost always complete the purchase (92%). Fix the top, and revenue follows.
+ 
+**2. Email is the highest-quality channel - and it's underused.**
+With a 34% purchase rate and $34.17 earned per visitor, email outperforms every other channel by a wide margin. Growing the email list is the single best growth lever available.
+ 
+**3. Social media needs a strategy rethink.**
+Social drives 29% of traffic but only 12% of purchases. Social visitors look at premium items (highest AOV: $115.48) but don't buy they need to be retargeted with paid ads to convert.
+ 
+**4. The lower funnel is a strength, not a problem.**
+92% of people who enter payment details complete the purchase. The checkout experience is working no redesign needed there.
+ 
+**5. Revenue is plateaued.**
+Four weeks of flat $17–18K revenue signals the business has hit a ceiling with its current approach. The path to growth is converting existing traffic better, not buying more of it.
 ## ✅ Recommendations
  
 | Priority | Action | Why It Matters |
@@ -201,7 +216,7 @@ FROM user_journey;
 - **GitHub** - Version control and project showcase
 
 ## 📋 Data Dictionary
-See [`data_dictionary.md`](./data_dictionary.md) for full column definitions and funnel stage reference.
+See [`data_dictionary.md`](./data_dictionary.md) for full schema documentation, column definitions, and analytical limitations.
 
 
 
