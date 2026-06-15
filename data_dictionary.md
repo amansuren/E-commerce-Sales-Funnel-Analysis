@@ -30,3 +30,10 @@
 | 5 | `purchase` | Order completed - `amount` populated here |
 
 > A complete journey = 5 rows (one per stage). Drop-offs have fewer rows.
+
+## Analytical Limitations
+ 
+1. **No sequential ordering enforced** - Users who appear at checkout without a recorded cart_add are still counted in checkout. This is a data quality consideration, not a query bug.
+2. **Single traffic source per user assumed** - Q8 uses `MAX(traffic_source)` per user. If a user was recorded across multiple sources, this returns the alphabetically last value, not the "true" source.
+3. **30-day window only** - Analysis does not account for users who began their journey before the window. A user's first page view may predate January 4; their purchase event within the window would still be counted.
+4. **Synthetic conversion rates** - The 17% overall conversion rate is unrealistic for production e-commerce. Do not use these numbers as benchmarks.
