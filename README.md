@@ -122,10 +122,7 @@ SELECT
   ROUND(stage_5_purchase * 100.0 / stage_1_views, 1)   AS overall_conversion_pct
 FROM funnel_stages;
 ```
- 
-💡 **Finding:** The biggest drop (69%) happens at `page_view → add_to_cart`. Every other stage holds strong — making product discovery the #1 priority to fix.
- 
- 
+
 ### 2. Funnel Breakdown by Traffic Source
  
 Groups the same funnel logic by `traffic_source` to compare channel quality — not just volume.
