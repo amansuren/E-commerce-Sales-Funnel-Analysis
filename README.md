@@ -32,7 +32,7 @@ I identified where customers drop off, which marketing channels actually work, a
 ---
 ## 📸 Query Results - Funnel & Conversion Rates
 
-[Click Here For Detailed Business Questions & Output](https://github.com/amansuren/E-commerce-Sales-Funnel-Analysis/blob/a151c52df176d07a4a0c8ebb000759145fdc6126/sql_queries/analysis.md)
+### [Click Here For Detailed Business Questions Analysis & Output](https://github.com/amansuren/E-commerce-Sales-Funnel-Analysis/blob/a151c52df176d07a4a0c8ebb000759145fdc6126/sql_queries/analysis.md)
 
 <img src="screenshots/ecommerce_funnel_diagram.svg" width="650" height="650"> 
 
