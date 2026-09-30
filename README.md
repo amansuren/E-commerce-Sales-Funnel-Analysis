@@ -1,5 +1,6 @@
 # 🛒 E-commerce Sales Funnel Analysis Project
-## 📁 Table of Contents
+ 
+ Table of Contents
 
 - [Business Problem](#-business-problem)
 - [Executive Summary](#-executive-summary)
