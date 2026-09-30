@@ -1,6 +1,16 @@
 # 🛒 E-commerce Sales Funnel Analysis Project
+## 📁 Table of Contents
 
-## Business Problem
+- [Business Problem](#-business-problem)
+- [Executive Summary](#-executive-summary)
+- [Query Results - Funnel & Conversion Rates](#-Query-Results---Funnel-&-Conversion-Rates)
+- [Key SQL Queries](#-key-sql-queries)
+- [Key Takeaways](#-key-takeaways)
+- [Recommendations](#-recommendations)
+- [Tools Used](#️-tools-used)
+- [Data Dictionary](#-data-dictionary)
+
+## 📋 Business Problem
 An e-commerce store had no visibility into where users were dropping off across its purchase funnel — making it impossible to prioritise marketing spend or product improvements.
  
 Using **30 days of event-level data** on BigQuery, I investigated one core question:
