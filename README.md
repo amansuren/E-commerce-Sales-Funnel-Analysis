@@ -115,7 +115,7 @@ The weekly plateau signals the business has hit a ceiling. More traffic alone wo
 ---
 ## 🔍 Key SQL Queries
  
-### [-> Full query file with all analysis](https://github.com/amansuren/E-commerce-Sales-Funnel-Analysis/blob/a151c52df176d07a4a0c8ebb000759145fdc6126/sql_queries/analysis.md)
+### [Full Query With Detailed Analysis](https://github.com/amansuren/E-commerce-Sales-Funnel-Analysis/blob/a151c52df176d07a4a0c8ebb000759145fdc6126/sql_queries/analysis.md)
 
 ### 1. Funnel Stage Conversion Rates
  
