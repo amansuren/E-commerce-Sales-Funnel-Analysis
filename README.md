@@ -6,7 +6,19 @@ An e-commerce store had no visibility into where users were dropping off across 
 Using **30 days of event-level data** on BigQuery, I investigated one core question:
  
 > **"Why are only 17% of visitors buying — and what can we do about it?"**
+## 📋 Executive Summary
 
+Over 30 days, **4,291 visitors** generated **$76,192 in revenue** but 83% of them left without buying.
+
+The analysis pinpoints one root cause: **69% of visitors never add anything to their cart.** Every other funnel stage performs well — once a customer reaches checkout, 92% complete the purchase. The checkout experience isn't broken. The path to it is.
+
+Three findings stand out:
+
+- **Email converts at 34%** — 4.5× better than social media — but it's the smallest channel
+- **Social media visitors browse the most expensive items** (highest AOV: $115) but rarely buy — a retargeting opportunity worth capturing
+- **47% cart abandonment** represents an estimated **$293,000 in recoverable annual revenue** without increasing ad spend
+
+The priority is clear: fix the top of the funnel, grow the email list, and retarget social visitors. Revenue is currently plateaued at ~$17–18K/week. These three moves address that ceiling without buying more traffic.
 
 ## 📸 Query Results - Funnel & Conversion Rates
 
