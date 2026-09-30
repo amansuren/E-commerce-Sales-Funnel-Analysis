@@ -11,6 +11,8 @@
 - [Tools Used](#️-tools-used)
 - [Data Dictionary](#-data-dictionary)
 
+--- 
+
 ## 📋 Business Problem
 An e-commerce store had no visibility into where users were dropping off across its purchase funnel — making it impossible to prioritise marketing spend or product improvements.
  
